@@ -18,6 +18,7 @@ gem 'inherited_resources'
 gem 'devise', '~>4.0'
 gem "devise-encryptable"
 gem 'devise-token_authenticatable'
+gem 'devise_saml_authenticatable'
 gem 'ruby-ldap'
 gem 'rabl'
 gem 'simpleidn'
@@ -44,6 +45,7 @@ group :development, :test do
 
   gem 'pry'
   gem 'pry-byebug'
+  gem 'ruby-saml-idp'
 end
 
 group :test do

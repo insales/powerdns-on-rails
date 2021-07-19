@@ -12,7 +12,25 @@ Rails.application.routes.draw do
     end
   end
 
-  devise_for :users, controllers: { sessions: "sessions" }, path: "sessions"
+  devise_for :users, skip: :all
+
+  devise_scope :user do
+    scope "sessions", controller: "sessions" do
+      get "sign_in" => "sessions#new", as: :new_user_session
+      post "sign_in" => "sessions#create", as: :user_session
+      delete "sign_out" => "sessions#destroy", as: :destroy_user_session
+    end
+
+    scope "users", controller: 'devise/saml_sessions' do
+      get :new, path: "saml/sign_in", as: :new_user_sso_session
+      post :create, path: "saml/auth", as: :user_sso_session
+      get :destroy, path: "sign_out", as: :destroy_user_sso_session
+      get :metadata, path: "saml/metadata", as: :metadata_user_sso_session
+      match :idp_sign_out, path: "saml/idp_sign_out", via: [:get, :post]
+    end
+  end
+  
+  get '/idp/auth' => 'fake_idp#create', as: :fakeidpauth unless Rails.env.production?
 
   root :to => 'dashboard#index'
 

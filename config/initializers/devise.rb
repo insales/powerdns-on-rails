@@ -48,6 +48,87 @@ Devise.setup do |config|
   # Setup a pepper to generate the encrypted password.
   config.pepper = "" #"f0c822c4f45b7677c1e78715f022f4a7a83a0fa8620230b8aa92493c83c8d0c83c3075499863e05be7d5730ad0106540d3985b252ab46aa59ffc7960c64f167a"
 
+  # Configguration for Devise SAML authentication
+
+  # Create user if the user does not exist. (Default is false)
+  config.saml_create_user = true
+
+  # Update the attributes of the user after a successful login. (Default is false)
+  config.saml_update_user = true
+
+  # Set the default user key. The user will be looked up by this key. Make
+  # sure that the Authentication Response includes the attribute.
+  config.saml_default_user_key = :email
+
+  # Optional. This stores the session index defined by the IDP during login.  If provided it will be used as a salt
+  # for the user's session to facilitate an IDP initiated logout request.
+  # config.saml_session_index_key = :session_index
+
+  # You can set this value to use Subject or SAML assertation as info to which email will be compared.
+  # If you don't set it then email will be extracted from SAML assertation attributes.
+  config.saml_use_subject = true
+
+  config.saml_update_resource_hook = ->(user, response, auth_value) {
+    user.login = response.raw_response.nameid.downcase
+    user.admin = true
+    user.password = SecureRandom.hex unless user.persisted?
+    Devise.saml_default_update_resource_hook.call(user, response, auth_value)
+  }
+
+  # You can support multiple IdPs by setting this value to the name of a class that implements a ::settings method
+  # which takes an IdP entity id as an argument and returns a hash of idp settings for the corresponding IdP.
+  # config.idp_settings_adapter = "MyIdPSettingsAdapter"
+
+  # You provide you own method to find the idp_entity_id in a SAML message in the case of multiple IdPs
+  # by setting this to the name of a custom reader class, or use the default.
+  # config.idp_entity_id_reader = "DeviseSamlAuthenticatable::DefaultIdpEntityIdReader"
+
+  # You can set a handler object that takes the response for a failed SAML request and the strategy,
+  # and implements a #handle method. This method can then redirect the user, return error messages, etc.
+  # config.saml_failed_callback = nil
+
+  # You can customize the named routes generated in case of named route collisions with
+  # other Devise modules or libraries. Set the saml_route_helper_prefix to a string that will
+  # be appended to the named route.
+  # If saml_route_helper_prefix = 'saml' then the new_user_session route becomes new_saml_user_session
+  # config.saml_route_helper_prefix = 'saml'
+
+  # You can add allowance for clock drift between the sp and idp.
+  # This is a time in seconds.
+  # config.allowed_clock_drift_in_seconds = 0
+
+  # In SAML responses, validate that the identity provider has included an InResponseTo
+  # header that matches the ID of the SAML request. (Default is false)
+  # config.saml_validate_in_response_to = false
+
+  # Configure with your SAML settings (see ruby-saml's README for more information: https://github.com/onelogin/ruby-saml).
+  config.saml_configure do |settings|
+    settings.sp_entity_id                       = 'http://localhost:3000/users/saml/metadata'
+    settings.assertion_consumer_service_url     = 'http://localhost:3000/users/saml/auth'
+    settings.assertion_consumer_service_binding = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
+    settings.name_identifier_format             = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
+    # settings.authn_context                      = ''
+
+    if Rails.env.production?
+      settings.idp_entity_id                    = Rails.application.secrets.sso_entity_id
+      settings.idp_sso_service_url              = Rails.application.secrets.sso_url
+      settings.idp_cert                         = Rails.application.secrets.sso_certificate
+    else
+      settings.idp_entity_id                    = 'http://localhost:3000/idp/auth'
+      settings.idp_sso_target_url               = 'http://localhost:3000/idp/auth'
+      settings.idp_cert_fingerprint             = '9E:65:2E:03:06:8D:80:F2:86:C7:6C:77:A1:D9:14:97:0A:4D:F4:4D'
+      settings.idp_cert_fingerprint_algorithm   = XMLSecurity::Document::SHA1
+    end
+
+    settings.security[:authn_requests_signed]   = true
+    settings.security[:logout_requests_signed]  = true
+    settings.security[:logout_responses_signed] = true
+    settings.security[:want_assertions_signed]  = true 
+    settings.security[:metadata_signed]         = true
+    settings.security[:digest_method]           = XMLSecurity::Document::SHA256
+    settings.security[:signature_method]        = XMLSecurity::Document::RSA_SHA256
+  end
+
   # ==> Configuration for :confirmable
   # The time you want to give your user to confirm his account. During this time
   # he will be able to access your application without confirming. Default is nil.
