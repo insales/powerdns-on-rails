@@ -114,13 +114,13 @@ Devise.setup do |config|
       settings.idp_sso_target_url                 = 'http://localhost:3000/idp/auth'
       settings.idp_cert_fingerprint               = '9E:65:2E:03:06:8D:80:F2:86:C7:6C:77:A1:D9:14:97:0A:4D:F4:4D'
       settings.idp_cert_fingerprint_algorithm     = XMLSecurity::Document::SHA1
-      settings.sp_entity_id                       = 'http://localhost:3000/users/saml/metadata'
-      settings.assertion_consumer_service_url     = 'http://localhost:3000/users/saml/auth'
+      settings.sp_entity_id                       = 'http://localhost:3000/sessions/sso/metadata'
+      settings.assertion_consumer_service_url     = 'http://localhost:3000/sessions/sso/auth'
     end
 
-    settings.assertion_consumer_service_binding = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
-    settings.name_identifier_format             = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
-    settings.authn_context                      = ''
+    settings.assertion_consumer_service_binding   = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
+    settings.name_identifier_format               = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
+    settings.authn_context                        = ''
 
     settings.security[:authn_requests_signed]     = true
     settings.security[:logout_requests_signed]    = true
