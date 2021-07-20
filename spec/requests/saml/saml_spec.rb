@@ -8,8 +8,8 @@ class SamlResponseGenerator
     self.x509_certificate = opts[:certificate] if opts[:certificate]
     self.algorithm = :sha1
     @saml_request_id = nil
-    @saml_acs_url = 'http://www.example.com/sso/saml_sessions'
-    new_opts = opts.merge(audience_uri: 'http://www.example.com/sso/metadata', issuer_uri: 'http://www.example.com/idp/auth')
+    @saml_acs_url = Rails.application.secrets.sso_sp_url
+    new_opts = opts.merge(audience_uri: Rails.application.secrets.sso_sp_entity_id, issuer_uri: Rails.application.secrets.sso_idp_url)
     encode_SAMLResponse(nameId, new_opts.except(:secret_key, :certificate))
   end
 end
@@ -23,7 +23,7 @@ RSpec.describe ".create" do
       post_data = SamlResponseGenerator.new.call 'developer@insales.ru', secret_key: secret_key, certificate: certificate 
 
       expect { 
-        post '/sso/saml_sessions', params: { SAMLResponse: post_data } 
+        post Rails.application.secrets.sso_sp_url, params: { SAMLResponse: post_data } 
       }.not_to change(User, :count)
       # expect(response).to redirect_to('/idp/auth')
     end
@@ -37,7 +37,7 @@ RSpec.describe ".create" do
       post_data = SamlResponseGenerator.new.call('developer@insales.ru', secret_key: secret_key, certificate: certificate)
 
       expect { 
-        post '/sso/saml_sessions', params: { SAMLResponse: post_data } 
+        post Rails.application.secrets.sso_sp_url, params: { SAMLResponse: post_data } 
       }.to change(User, :count).by(1)
       expect(response).to redirect_to('/')
     end
