@@ -19,14 +19,10 @@ Rails.application.routes.draw do
       get "sign_in" => "sessions#new", as: :new_user_session
       post "sign_in" => "sessions#create", as: :user_session
       delete "sign_out" => "sessions#destroy", as: :destroy_user_session
-    
-      scope "sso", controller: 'devise/saml_sessions' do
-        get :new, path: "sign_in", as: :new_user_sso_session
-        post :create, path: "auth", as: :user_sso_session
-        get :destroy, path: "sign_out", as: :destroy_user_sso_session
-        get :metadata, path: "metadata", as: :metadata_user_sso_session
-        # match :idp_sign_out, path: "idp_sign_out", via: [:get, :post]
-      end
+    end
+    scope module: :devise do
+      resources :saml_sessions, only: [:new, :create, :destroy], path: 'sso/saml_sessions'
+      get "sso/metadata" => "saml_sessions#metadata", as: :metadata_user_sso_session
     end
   end
   
