@@ -4,7 +4,7 @@ require 'ldap'
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable, :lockable and :timeoutable
-  devise :database_authenticatable,
+  devise :database_authenticatable, :saml_authenticatable, :trackable,
    # :recoverable,
    :rememberable, :validatable,
    :encryptable, encryptor: :restful_authentication_sha1
