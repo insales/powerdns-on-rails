@@ -3,6 +3,6 @@ role :db,  'powerdnsapp3.insales.ru', primary: true
 
 namespace :deploy do
   task :restart do
-    run "god restart powerdns-on-rails-unicorn"
+    run "god restart powerdns-unicorn"
   end
 end
