@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     scope "sessions", controller: "sessions" do
       get "sign_in" => "sessions#new", as: :new_user_session
       post "sign_in" => "sessions#create", as: :user_session
-      delete "sign_out" => "sessions#destroy", as: :destroy_user_session
+      match "sign_out" => "sessions#destroy", as: :destroy_user_session, via: [:get, :delete] # костыль для разлогина по таймауту
     end
     scope module: :devise do
       resources :saml_sessions, only: [:new, :create, :destroy], path: 'sso/saml_sessions'

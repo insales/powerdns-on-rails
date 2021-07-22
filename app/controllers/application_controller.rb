@@ -15,6 +15,15 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticate_user!
+    if current_user && Time.now > current_user.current_sign_in_at + 18.hours
+      current_user.current_sign_in_at = Time.now
+      current_user.save
+      redirect_to destroy_user_session_path
+    end
+    return super
+  end
+
   protected
     # stubs
     def current_token
