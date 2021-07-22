@@ -16,11 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    if current_user && Time.now > current_user.current_sign_in_at + 18.hours
-      current_user.current_sign_in_at = Time.now
-      current_user.save
-      redirect_to destroy_user_session_path
-    end
+    sign_out_and_redirect(User) if current_user && Time.now > current_user.current_sign_in_at + 18.hours
     return super
   end
 
