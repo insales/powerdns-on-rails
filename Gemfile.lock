@@ -200,7 +200,7 @@ GEM
     nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     orm_adapter (0.5.0)
-    pg (1.1.4)
+    pg (1.2.3)
     popper_js (2.9.3)
     protected_attributes_continued (1.8.2)
       activemodel (>= 5.0)
@@ -209,12 +209,12 @@ GEM
       middleware
       thor
       thread_safe
-    pry (0.13.1)
+    pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    pry-byebug (3.9.0)
+    pry-byebug (3.8.0)
       byebug (~> 11.0)
-      pry (~> 0.13.0)
+      pry (~> 0.10)
     public_suffix (4.0.6)
     puma (5.5.2)
       nio4r (~> 2.0)
@@ -386,7 +386,7 @@ DEPENDENCIES
   listen
   mini_racer
   nokogiri
-  pg (~> 1.1.4)
+  pg
   protected_attributes_continued
   pry
   pry-byebug

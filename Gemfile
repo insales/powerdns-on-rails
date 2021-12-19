@@ -4,9 +4,8 @@ gem 'rails', '7.0'
 
 gem 'unicorn'
 
-# gem 'uglifier'
 gem "sprockets-rails"
-gem 'pg', '~> 1.1.4'
+gem 'pg'
 gem 'haml'
 gem 'jquery-rails'
 gem 'sass-rails'
