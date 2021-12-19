@@ -45,7 +45,7 @@ describe AuthTokensController do
       sign_in(FactoryBot.create(:token_user))
 
       @domain = domain
-      @params = { :domain => @domain.name, :expires_at => 1.hour.since.to_s(:rfc822) }
+      @params = { :domain => @domain.name, :expires_at => 1.hour.since.to_formatted_s(:rfc822) }
     end
 
     it "with allow_new set" do
