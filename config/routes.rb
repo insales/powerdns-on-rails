@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       get "sso/metadata" => "saml_sessions#metadata", as: :metadata_user_sso_session
     end
   end
-  
+
   get '/idp/auth' => 'fake_idp#create', as: :fakeidpauth unless Rails.env.production?
 
   root :to => 'dashboard#index'

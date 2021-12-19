@@ -111,7 +111,7 @@ Devise.setup do |config|
     settings.assertion_consumer_service_binding   = 'urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST'
     settings.name_identifier_format               = 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress'
     settings.authn_context                        = ''
-    
+
     if Rails.application.secrets.sso_idp_certificate.present?
       settings.idp_cert                           = Rails.application.secrets.sso_idp_certificate
     else
@@ -122,7 +122,7 @@ Devise.setup do |config|
     settings.security[:authn_requests_signed]     = true
     settings.security[:logout_requests_signed]    = true
     settings.security[:logout_responses_signed]   = true
-    settings.security[:want_assertions_signed]    = true 
+    settings.security[:want_assertions_signed]    = true
     settings.security[:metadata_signed]           = true
     settings.security[:digest_method]             = XMLSecurity::Document::SHA256
     settings.security[:signature_method]          = XMLSecurity::Document::RSA_SHA256
