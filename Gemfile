@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '6.1.4.4'
+gem 'rails', '7.0'
 
 gem 'unicorn'
 
@@ -13,8 +13,9 @@ gem 'sass-rails'
 gem 'font-awesome-sass', '~>5.15'
 gem 'bootstrap', '~>5.0'
 gem 'will_paginate', '~> 3.3'
-gem "audited", '~>4.0'
-gem 'inherited_resources'
+gem "audited", '~>5.0'
+# на форк пока 7 рельсы не вольют в апстрим
+gem 'inherited_resources', ">= 1.13", github: 'tagliala/inherited_resources', branch: 'feature/railties-7'
 gem 'devise', '~>4.0'
 gem "devise-encryptable"
 gem 'devise-token_authenticatable'
