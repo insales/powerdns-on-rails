@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "search/results.html.haml" do
+describe "search/results" do
 
   before(:each) do
     @admin = FactoryBot.create(:admin)

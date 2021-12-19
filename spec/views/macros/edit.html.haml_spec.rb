@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "macros/edit.html.haml" do
+describe "macros/edit" do
   let(:user) { FactoryBot.create :admin }
   before do
     allow(view).to receive(:current_user).and_return(user)

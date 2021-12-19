@@ -5,7 +5,7 @@ gem 'rails', '7.0'
 gem 'unicorn'
 
 # gem 'uglifier'
-
+gem "sprockets-rails"
 gem 'pg', '~> 1.1.4'
 gem 'haml'
 gem 'jquery-rails'
@@ -46,7 +46,7 @@ group :development, :test do
 
   gem 'pry'
   gem 'pry-byebug'
-  gem 'ruby-saml-idp'
+  gem 'saml_idp'
 end
 
 group :test do

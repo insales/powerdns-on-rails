@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "domains/show.html.haml" do
+describe "domains/show" do
   context "for all users" do
 
     let(:domain) { FactoryBot.create(:domain, name: "example.com") }

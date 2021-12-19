@@ -1,6 +1,8 @@
 require 'spec_helper'
 
-describe "audits/domain.html.haml" do
+# rails 7 cann find view
+# describe "audits/domain.html.haml" do
+describe "audits/domain" do
   context "and domain audits" do
 
     before(:each) do

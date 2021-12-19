@@ -1,8 +1,6 @@
-ActiveSupport.on_load :action_view do
-  # will_paginate сразу и определяет класс и подгружает его в actionview, поэтому приходится наследоваться в колбеке
 
-  class BootstrapLinkRenderer < WillPaginate::ActionView::LinkRenderer
-    protected
+module BootstrapLinkRenderer
+  protected
 
     def html_container(html)
       tag :nav,
@@ -28,5 +26,4 @@ ActiveSupport.on_load :action_view do
     def gap
       tag :li, link(super, '#', class: 'page-link d-none d-sm-block'), class: 'page-item disabled'
     end
-  end
 end

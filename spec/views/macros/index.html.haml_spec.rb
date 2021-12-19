@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "macros/index.html.haml" do
+describe "macros/index" do
 
   it "should render a list of macros" do
     2.times { |i| FactoryBot.create(:macro, :name => "Macro #{i}") }

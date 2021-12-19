@@ -294,9 +294,14 @@ GEM
     ruby-saml (1.13.0)
       nokogiri (>= 1.10.5)
       rexml
-    ruby-saml-idp (0.3.5)
     rvm-capistrano (1.5.6)
       capistrano (~> 2.15.4)
+    saml_idp (0.14.0)
+      activesupport (>= 5.2)
+      builder (>= 3.0)
+      nokogiri (>= 1.6.2)
+      rexml
+      xmlenc (>= 0.7.1)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -344,6 +349,13 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
     will_paginate (3.3.1)
+    xmlenc (0.8.0)
+      activemodel (>= 3.0.0)
+      activesupport (>= 3.0.0)
+      nokogiri (>= 1.6.0, < 2.0.0)
+      xmlmapper (>= 0.7.3)
+    xmlmapper (0.8.1)
+      nokogiri (~> 1.11)
     xpath (3.2.0)
       nokogiri (~> 1.8)
     zeitwerk (2.5.1)
@@ -386,11 +398,12 @@ DEPENDENCIES
   rspec-html-matchers
   rspec-rails
   ruby-ldap
-  ruby-saml-idp
   rvm-capistrano
+  saml_idp
   sass-rails
   simplecov
   simpleidn
+  sprockets-rails
   state_machine
   turnip
   unicorn

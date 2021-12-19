@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "domains/apply_macro.html.haml" do
+describe "domains/apply_macro" do
   before(:each) do
     @domain = FactoryBot.create(:domain)
     @macro = FactoryBot.create(:macro)

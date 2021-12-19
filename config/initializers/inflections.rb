@@ -14,3 +14,9 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym "RESTful"
 # end
+
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  %w[A AAAA CNAME LOC MX NS PTR SOA SPF SRV SSHFP TXT].each do |dns_record_type|
+    inflect.acronym dns_record_type
+  end
+end

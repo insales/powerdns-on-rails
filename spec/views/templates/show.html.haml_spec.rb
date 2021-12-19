@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "templates/show.html.haml" do
+describe "templates/show" do
   context "for complete templates" do
     before(:each) do
       @zone_template = FactoryBot.create(:zone_template)

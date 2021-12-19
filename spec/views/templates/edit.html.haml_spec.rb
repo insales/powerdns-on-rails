@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "templates/edit.html.haml" do
+describe "templates/edit" do
 
   context "and existing templates" do
 
