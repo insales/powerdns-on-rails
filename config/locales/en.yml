@@ -157,7 +157,7 @@ en:
 # Domains _record
   label_domain_edit_record: "Edit this record"
   label_domain_delete_record: "Delete this record"
-  confirm_domain_delte_record: "Are you sure?"
+  confirm_domain_delete_record: "Are you sure want to delete record `%{record}`?"
 
 # Domains _new
   help_domain_fqdn:
