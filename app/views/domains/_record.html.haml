@@ -14,13 +14,15 @@
       - if current_user || current_token.can_change?( record )
         = link_to_function fa_icon('edit fw'), "editRecord(#{record.id}, '#{record.type.downcase}')", title: t(:label_domain_edit_record)
       - if current_user || current_token.can_remove?( record )
-        = link_to fa_icon('trash fw', class: 'text-danger'), domain_record_path( record.domain, record ), method: :delete, data: { confirm: t(:confirm_domain_delte_record) }, title: t(:label_domain_delete_record)
+        = link_to fa_icon('trash fw', class: 'text-danger'), domain_record_path( record.domain, record ), method: :delete,
+          data: { confirm: t(:confirm_domain_delete_record, record: [record.shortname, record.type, record.prio, record.content&.truncate(40)].map(&:presence).compact.join(" ")) },
+          title: t(:label_domain_delete_record)
 
 - unless record.domain.slave?
   - if current_user || current_token.can_change?( record )
     %tr[ record, :edit ]{ :style => "display: none;", :class => [css_class, "show_#{record.type.downcase}_#{record.id}"]}
       %td{ :colspan => 7 }
-        = form_for( record, :as => :record, :url => domain_record_path(record.domain, record ), :remote => true ) do |f|
+        = form_for( record, :as => :record, :url => domain_record_path(record.domain, record), :remote => true ) do |f|
           %div[ record, :error ]
             %table.gridwide
               %tr
