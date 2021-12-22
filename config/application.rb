@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module PowerdnsOnRails
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 5.1
+    config.load_defaults 6.1
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -22,5 +22,8 @@ module PowerdnsOnRails
     config.paths.add "lib", eager_load: true
 
     config.action_controller.default_protect_from_forgery = false
+
+    # from rails 6.1. need to set here for tests to work
+    config.active_record.legacy_connection_handling = false
   end
 end

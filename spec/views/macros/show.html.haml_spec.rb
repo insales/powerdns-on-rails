@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "macros/show.html.haml" do
+describe "macros/show" do
   before(:each) do
     @macro = FactoryBot.create(:macro)
     FactoryBot.create(:macro_step_create, :macro => @macro)

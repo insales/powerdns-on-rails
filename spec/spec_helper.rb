@@ -7,7 +7,7 @@ if ENV['COVERAGE']
 end
 
 
-require File.expand_path("../../config/environment", __FILE__)
+require File.expand_path("../config/environment", __dir__)
 require 'rspec/rails'
 
 Rails.application.eager_load!

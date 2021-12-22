@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "domains/new.html.haml" do
+describe "domains/new" do
 
   before(:each) do
     assign(:domain, Domain.new)

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "templates/new.html.haml" do
+describe "templates/new" do
 
   context "and new templates" do
     before(:each) do

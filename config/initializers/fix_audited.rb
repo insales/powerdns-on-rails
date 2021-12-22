@@ -1,3 +1,4 @@
+require 'audited/audit'
 Audit = Audited::Audit
 
 # пока не тащим миграцию из audited:upgrade, т.к. таблица там большая

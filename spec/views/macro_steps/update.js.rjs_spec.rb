@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "macro_steps/update.js.rjs" do
+describe "macro_steps/update" do
   before(:each) do
     assigns[:macro] = @macro = FactoryBot.create(:macro)
     assigns[:macro_step] = @macro_step = FactoryBot.create(:macro_step_create, :macro => @macro)

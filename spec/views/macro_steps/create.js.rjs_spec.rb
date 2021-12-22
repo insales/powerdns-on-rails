@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "macro_steps/create.js.rjs" do
+describe "macro_steps/create" do
   describe "for failed records" do
     before(:each) do
       assigns[:macro] = Factory.build(:macro)
