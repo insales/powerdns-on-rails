@@ -1,7 +1,6 @@
 GIT
-  remote: https://github.com/tagliala/inherited_resources.git
-  revision: c85120f50439a6b75471f66e89f91ff728f41f1b
-  branch: feature/railties-7
+  remote: https://github.com/activeadmin/inherited_resources.git
+  revision: a0a350245a2ec76c040f8751707c1d98792534dd
   specs:
     inherited_resources (1.13.0)
       actionpack (>= 5.2, < 7.1)
