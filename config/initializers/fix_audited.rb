@@ -1,3 +1,6 @@
+# из-за belongs_to :user в Audit, причем надо до самой модели выставить
+Rails.application.config.active_record.belongs_to_required_by_default = false
+
 require 'audited/audit'
 Audit = Audited::Audit
 
