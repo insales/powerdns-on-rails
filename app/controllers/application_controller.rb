@@ -15,6 +15,11 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticate_user!
+    sign_out_and_redirect(User) if current_user && Time.now > current_user.current_sign_in_at + 18.hours
+    return super
+  end
+
   protected
     # stubs
     def current_token
