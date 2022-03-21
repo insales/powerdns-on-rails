@@ -1,0 +1,61 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  NAMESPACE: "app-powerdns-admin"
+
+.ycloud: &ycloud
+  - kubectl config set-cluster k8s --server="$KUBE_URL" --insecure-skip-tls-verify=true
+  - kubectl config set-credentials admin --token="$KUBE_TOKEN"
+  - kubectl config set-context default --cluster=k8s --user=admin
+  - kubectl config use-context default
+
+.kaniko-image: &kaniko-image
+  name: gcr.io/kaniko-project/executor:debug
+  entrypoint: [""]
+
+.kaniko-init: &kaniko-init
+  - mkdir -p /kaniko/.docker
+  - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+
+build:
+  stage: build
+  image: &kaniko-image
+    name: gcr.io/kaniko-project/executor:debug
+    entrypoint: [""]
+  script:
+    - >-
+      /kaniko/executor
+      --context="${CI_PROJECT_DIR}"
+      --dockerfile="${CI_PROJECT_DIR}/devops/nginx/Dockerfile"
+      --destination="${CI_REGISTRY_IMAGE}/nginx:${CI_COMMIT_BRANCH/\//_}-${CI_COMMIT_SHORT_SHA}"
+      --destination="${CI_REGISTRY_IMAGE}/nginx:${CI_COMMIT_BRANCH/\//_}"
+      --cache-repo="${CI_REGISTRY_IMAGE}/cache"
+      --cache=true
+      --cache-copy-layers
+      --log-timestamp=true
+      --cache-ttl=168h
+
+deploy:
+  stage: deploy
+  image: $CI_REGISTRY/dev/krane:latest
+  before_script: *ycloud
+  environment:
+    name: prod
+  script: |
+    krane render --filenames=deploy --bindings="registry=$CI_REGISTRY" --current-sha $CI_COMMIT_SHORT_SHA | krane deploy app-powerdns-admin default -f deploy/secrets.ejson -
+  only:
+    - master
+
+manual_deploy:
+  stage: deploy
+  image: $CI_REGISTRY/dev/krane:latest
+  when: manual
+  before_script: *ycloud
+  environment:
+    name: prod
+  script: |
+    krane render --filenames=deploy --bindings="registry=$CI_REGISTRY" --current-sha $CI_COMMIT_SHORT_SHA | krane deploy app-powerdns-admin default -f deploy/secrets.ejson -
+  except:
+    - master
